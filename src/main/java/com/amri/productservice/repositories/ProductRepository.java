@@ -2,6 +2,8 @@ package com.amri.productservice.repositories;
 
 import com.amri.productservice.models.Product;
 import com.amri.productservice.repositories.projections.ProductWithTitleAndPrice;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Override
     Product getById(Long aLong);
 
+    @Override
+    Page<Product> findAll(Pageable pageable);
 
     //Native Query = SQL Query
     @Query(value = "select p.title, p.price from products p where p.title = :title and p.price = :price", nativeQuery = true)

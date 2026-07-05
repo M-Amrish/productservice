@@ -4,6 +4,8 @@ import com.amri.productservice.dtos.FakeStoreProductDto;
 import com.amri.productservice.exceptions.ProductNotFoundException;
 import com.amri.productservice.models.Category;
 import com.amri.productservice.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -34,7 +36,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public Page<Product> getAllProducts(int pageNumber, int pageSize) {
         String url ="https://fakestoreapi.com/products/";
         FakeStoreProductDto[] fakeStoreProductDtos = restTemplate.getForObject(
             url, FakeStoreProductDto[].class
@@ -44,7 +46,7 @@ public class FakeStoreProductService implements ProductService{
         for(FakeStoreProductDto i : fakeStoreProductDtos){
             products.add(convertToProduct(i));
         }
-        return products;
+        return new PageImpl<>(products);
     }
 
     @Override

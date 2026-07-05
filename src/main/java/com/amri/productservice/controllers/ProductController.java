@@ -4,6 +4,7 @@ import com.amri.productservice.exceptions.ProductNotFoundException;
 import com.amri.productservice.models.Product;
 import com.amri.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ProductController {
     private ProductService productService;
 
-    ProductController(@Qualifier("selfProductService")ProductService productService){
+    ProductController(@Qualifier("fakeStoreProductService")ProductService productService){
         this.productService = productService;
     }
 
@@ -23,8 +24,8 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public List<Product> getAllProduct(){
-        return productService.getAllProducts();
+    public Page<Product> getAllProduct(@RequestParam("pageNumber") int pageNumber, @RequestParam("pageSize") int pageSize){
+        return productService.getAllProducts(pageNumber,pageSize);
     }
 
     @PostMapping()
