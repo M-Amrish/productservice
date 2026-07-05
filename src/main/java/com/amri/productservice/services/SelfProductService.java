@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service("selfProductService")
@@ -20,8 +22,10 @@ public class SelfProductService implements ProductService{
     public ProductRepository productRepository;
     public CategoryRepository categoryRepository;
 
+
     SelfProductService( ProductRepository productRepository,
-                       CategoryRepository categoryRepository){
+                       CategoryRepository categoryRepository
+                        ){
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
     }
